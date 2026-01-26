@@ -1,0 +1,35 @@
+.chart-wrapper {
+    width: 95%;
+    margin-top: 10px;
+    height: 60px;
+    font-family: "MemomentKkukkukk";
+}
+
+/*차트 범례*/
+.asset-legend {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-family: "MemomentKkukkukk";
+    /* 원하는 폰트 */
+    color: rgb(68, 68, 68);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.legend-label {
+    font-family: "MemomentKkukkukk";
+}

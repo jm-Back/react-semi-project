@@ -1,0 +1,56 @@
+.Header {
+    display: flex;
+    align-items: left;
+    font-family: "MemomentKkukkukk";
+    font-weight: bolder;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.Header>div {
+    display: flex;
+}
+
+.Header .logo>img {
+    width: 15%;
+    /* or 100%, 50% */
+    height: auto;
+    margin-left: 20px;
+    /* 비율 유지 핵심 */
+}
+
+.Header .logo_name {
+    font-family: "MemomentKkukkukk";
+    font-size: 35px;
+    margin-top: 6px;
+    margin-left: 20px;
+    color: hwb(36 10% 9%);
+}
+
+
+.Header .header_center {
+    margin-top: 15px;
+    width: 100%;
+    font-size: 29px;
+    justify-content: center;
+}
+
+.Header .header_left {
+    margin-top: 7px;
+    width: 60px;
+    font-size: 25px;
+    justify-content: center;
+    border-radius: 20%;
+    max-height: 40px;
+    border-bottom: none;
+}
+
+
+.Header .header_right {
+    margin-top: 7px;
+    width: 60px;
+    font-size: 25px;
+    justify-content: center;
+    border-radius: 20%;
+    max-height: 40px;
+}

@@ -1,0 +1,82 @@
+.main-layout {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+
+.section-2 {
+    width: 40%;
+    padding-top: 20px;
+    /* 캘린더 고정폭 */
+}
+
+.section-2>h3 {
+    font-size: 25px;
+}
+
+.section-3 {
+    width: 50%;
+    padding-top: 50px;
+    padding-left: 10px;
+}
+
+/*차트 부분*/
+.section-4 {
+    width: 100%;
+    padding-top: -3px;
+    padding-left: 50px;
+}
+
+.section-4>h3 {
+    font-size: 19px;
+}
+
+/*최상단 요약*/
+.top-section {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/*선*/
+hr {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    width: 90%;
+}
+
+
+/*날짜 선택기*/
+.date-selector {
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+    /* 가로 중앙 */
+    align-items: center;
+    /* 세로 중앙 */
+    gap: 20px;
+    /* 버튼과 날짜 사이 간격 */
+    margin-top: 50px;
+    /* 위쪽 여백 */
+}
+
+.date-selector .date_center {
+    font-size: 29px;
+    color: hwb(0 27% 73%);
+    font-weight: bolder;
+}
+
+.date-selector .date_left,
+.date-selector .date_right {
+    width: 50px;
+    height: 40px;
+    font-size: 25px;
+    background-color: rgb(236, 236, 263);
+    cursor: pointer;
+    border-radius: 20%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

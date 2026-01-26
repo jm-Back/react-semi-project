@@ -1,0 +1,41 @@
+.gold-summary {
+    font-size: 28px;
+    color: rgb(40, 40, 40);
+    margin-top: 25px;
+    margin-left: 30px;
+}
+
+.gold-summary .price {
+    margin-left: 6px;
+    font-weight: 700;
+    font-size: 33px;
+    color: hwb(36 10% 9%);
+    transition: color 0.3s ease;
+    /* 금 느낌 */
+}
+
+.summary-mention {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 14px;
+    margin-top: 5px;
+    color: gray;
+}
+
+.mention-price {
+    font-weight: 700;
+}
+
+/*텍스트 등장 효과*/
+.fade-slide {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 2.9s ease, transform 0.4s ease;
+}
+
+.fade-slide.show {
+    opacity: 1;
+    transform: translateY(0);
+}
