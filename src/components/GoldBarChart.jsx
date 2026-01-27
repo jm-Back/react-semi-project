@@ -7,8 +7,10 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import "./GoldChart.css"
+import "./GoldBarChart.css"
 import { chartColorList } from "../util/chart-color"
+
+import NoData from "./common/NoData";
 
 ChartJS.register(
     BarElement,
@@ -109,8 +111,6 @@ export default function DoughnutChart() {
         ],
     };
 
-
-
     //차트 옵션 
     const options = {
         indexAxis: 'y', // 🔥 가로
@@ -158,9 +158,18 @@ export default function DoughnutChart() {
         },
     };
 
-    return <div className='chart-wrapper'>
-        <Bar data={data} options={options} />
-        <AssetLegend datasets={data.datasets} />
-    </div>
+    return (
+        <div className='chart-wrapper'>
+            {data.datasets.length === 0 ? (
+                <NoData message="거래 기록이 없습니다" />
+            ) : (
+                <>
+                    <Bar data={data} options={options} />
+                    <AssetLegend datasets={data.datasets} />
+                </>
+            )}
+        </div>
+    );
+
 
 }

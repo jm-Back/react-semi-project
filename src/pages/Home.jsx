@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Button from "../components/common/Button";
 import GoldList from "../components/GoldList";
 
-import GoldChart from "../components/GoldChart";
+import GoldBarChart from "../components/GoldBarChart";
 import GoldTrader from "../components/GoldTrader";
 import GoldAssetSummary from "../components/GoldAssetSummary";
 import GoldPriceChart from "../components/GoldPriceChart";
@@ -98,7 +98,7 @@ const Home = () => {
             <div className="top-section">
                 <div className="section-4">
                     <h3>📌 {pivotDate.getMonth() + 1}월 금장부 요약</h3>
-                    <GoldChart />
+                    <GoldBarChart />
                 </div>
 
             </div>

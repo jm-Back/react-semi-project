@@ -207,7 +207,7 @@ export default function GoldPriceChart({ }) {
                     label: ctx => {
                         const { type, y } = ctx.raw;
                         return type === "BUY"
-                            ? `매수 @ ${y.toLocaleString()}원`
+                            ? `매입 @ ${y.toLocaleString()}원`
                             : `매도 @ ${y.toLocaleString()}원`;
                     },
                 },
@@ -236,7 +236,7 @@ export default function GoldPriceChart({ }) {
             <div className="gold-chart-header">
                 <div className="gold-chart-title">금 시세 추이</div>
                 <div className="gold-chart-subtitle">
-                    지난 1년간 매수 · 매도 기록이 시세에 표시됩니다
+                    지난 1년간 매입 · 매도 기록이 시세에 표시됩니다
                 </div>
             </div>
 
@@ -248,7 +248,7 @@ export default function GoldPriceChart({ }) {
                 <div className="chart-legend">
                     <div className="legend-item">
                         <span className="legend-dot legend-buy" />
-                        매수
+                        매입
                     </div>
                     <div className="legend-item">
                         <span className="legend-dot legend-sell" />
