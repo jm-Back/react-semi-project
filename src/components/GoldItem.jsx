@@ -15,7 +15,7 @@ const GoldItem = ({ seq, purchaseDate, categoryId, gram, type, price, targetData
                 onClick={() => nav(`/record/${seq}`)}
                 className={`img_section img_section_${type}`}>
                 <img src={getGoldImage("y")} />
-                <div>{type === 1 ? '줍줍' : '안녕'}</div>
+                <div>{type === '1' ? '매수!' : '안녕'}</div>
             </div>
             <div
                 onClick={() => nav(`/record/${seq}`)}

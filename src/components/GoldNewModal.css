@@ -1,0 +1,147 @@
+/* 배경 */
+.modal_backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 카드 */
+.modal {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 26px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    animation: modalFadeUp 0.25s ease-out;
+}
+
+/* 타이틀 */
+.modal h2 {
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c2c2c;
+}
+
+/* 공통 input/select/textarea */
+.modal input,
+.modal select,
+.modal textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+    border-color: #ffbf00;
+    box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+}
+
+/* textarea */
+.modal textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+/* 버튼 영역 */
+.modal_btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 저장 버튼 */
+.modal_btns button:first-child {
+    flex: 1;
+    background: #ffbf00;
+    color: #fff;
+    border: none;
+
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.1s;
+}
+
+.modal_btns button:first-child:hover {
+    background: #e6ac00;
+    transform: translateY(-1px);
+}
+
+/* 취소 버튼 */
+.modal_btns button:last-child {
+    flex: 1;
+    background: #f1f1f1;
+    color: #555;
+    border: none;
+
+    padding: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.modal_btns button:last-child:hover {
+    background: #e2e2e2;
+}
+
+/* 등장 애니메이션 */
+@keyframes modalFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+.row input,
+.row select {
+    flex: 1;
+    /* 🔥 이게 핵심 */
+}
+
+
+.modal input[type="number"] {
+    text-align: right;
+}
+
+.modal input,
+.modal select,
+.modal textarea {
+    box-sizing: border-box;
+    /* 🔥 이거 없으면 무조건 어긋남 */
+}

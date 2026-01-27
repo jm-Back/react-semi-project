@@ -117,7 +117,6 @@ export default function DoughnutChart() {
         responsive: true,
         maintainAspectRatio: false, // ⭐ 핵심
 
-
         plugins: {
             legend: {
                 display: false,
@@ -158,45 +157,6 @@ export default function DoughnutChart() {
             },
         },
     };
-
-
-    // const textCenter = {
-    //     id: 'textCenter',
-    //     afterDatasetsDraw: (chart) => {
-    //         const ctx = chart.ctx;
-    //         const x = (chart.chartArea.left + chart.chartArea.right) / 2;
-    //         const y = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-
-    //         //총합 
-    //         const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-
-    //         // ✅ 전월 대비 증감 (예시)
-    //         const prevTotal = chart.options.prevTotal ?? 0;
-    //         const diff = total - prevTotal;
-    //         const isUp = diff >= 0;
-
-    //         ctx.save();
-    //         ctx.font = 'bold 20px MemomentKkukkukk';
-    //         ctx.textAlign = 'center';
-
-    //         ctx.textBaseline = 'middle';
-    //         ctx.fillText(`${total.toLocaleString()}원`, x, y - 8);
-
-    //         // 🔹 2줄: 전월 대비
-    //         ctx.font = "12px MemomentKkukkukk";
-    //         ctx.fillStyle = isUp ? "#ff4d4f" : "#1890ff";
-
-    //         const sign = isUp ? "🔺" : "🔻";
-    //         ctx.fillText(
-    //             `전월대비 ${sign}${Math.abs(diff).toLocaleString()}원`,
-    //             x,
-    //             y + 14
-    //         );
-
-    //         ctx.restore();
-
-    //     },
-    // };
 
     return <div className='chart-wrapper'>
         <Bar data={data} options={options} />

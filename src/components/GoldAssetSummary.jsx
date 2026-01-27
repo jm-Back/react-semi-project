@@ -26,8 +26,7 @@ export default function GoldAssetSummary({ name, holdings, }) {
             </span>
             <span>입니다. </span>
             <div className={`summary-mention fade-slide ${show ? "show" : ""}`}>
-                📢 매입가 대비
-                <span className="mention-price"> 0000원</span> 수익 입니다!
+                📢 <span></span><a> 나의 전체 매입/매도 기록 보러가기</a>
             </div>
         </div>
     );

@@ -57,7 +57,7 @@ function App() {
     const idRef = useRef(5);  //3으로 초기화
 
     //장부 추가 
-    const onCreate = (purchaseDate, categoryId, gram, type, targetData, content) => {
+    const onCreate = (purchaseDate, categoryId, gram, type, price, targetData, content) => {
         dispatch({
             type: "CREATE",
             data: {
@@ -66,6 +66,7 @@ function App() {
                 categoryId,
                 gram,
                 type,
+                price,
                 targetData,
                 content,
             },

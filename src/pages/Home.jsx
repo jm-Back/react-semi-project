@@ -82,7 +82,7 @@ const Home = () => {
             </div>
             <div className="top-section">
                 <div className="section-2">
-                    <h3>🪙 금 납입 캘린더</h3>
+                    <h3>🪙 금 매입/매도 캘린더</h3>
                     <GoldStampCalendar paidDates={goldPaidDates} pivotDate={pivotDate}
                     />
                 </div>
@@ -94,7 +94,7 @@ const Home = () => {
             <hr />
             <div className="top-section">
                 <div className="section-4">
-                    <h3>📌 내 금장부 요약</h3>
+                    <h3>📌 {pivotDate.getMonth() + 1}월 금장부 요약</h3>
                     <GoldChart />
                 </div>
 

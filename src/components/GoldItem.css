@@ -8,8 +8,8 @@
 }
 
 .GoldItem .img_section {
-    min-width: 120px;
-    height: 80px;
+    min-width: 110px;
+    height: 70px;
 
     display: flex;
     justify-content: center;
@@ -55,7 +55,7 @@
 }
 
 .GoldItem .info_section .content {
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .GoldItem .button_section {
