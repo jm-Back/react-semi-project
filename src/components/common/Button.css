@@ -4,7 +4,7 @@
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 13px;
     white-space: nowrap;
 
 }
@@ -17,4 +17,11 @@
 .Button_NEGATIVE {
     background-color: rgb(253, 86, 95);
     color: white;
+}
+
+.Button_DELETE {
+    background-color: rgb(0, 0, 0);
+    width: 60PX;
+    color: white;
+    justify-content: center;
 }

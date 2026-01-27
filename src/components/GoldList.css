@@ -1,8 +1,9 @@
 .GoldList .menu_bar {
-    margin: 20px 0px;
+    margin: 5px 0px;
     display: flex;
     gap: 10px;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .GoldList .menu_bar select {
@@ -10,10 +11,19 @@
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 13px;
     cursor: pointer;
 }
 
 .GoldList .menu_bar button {
     flex: 1;
+}
+
+.list_wrapper {
+    flex-direction: column;
+    /* ⭐ 세로 정렬 */
+    height: 310px;
+    /* ⭐ 원하는 높이 */
+    overflow-y: auto;
+    /* ⭐ 세로 스크롤 */
 }

@@ -24,8 +24,11 @@
     font-size: 35px;
     margin-top: 6px;
     margin-left: 20px;
-    color: hwb(36 10% 9%);
+    color: hsl(45, 88%, 55%);
+
 }
+
+/* hwb(36 10% 9%)*/
 
 
 .Header .header_center {

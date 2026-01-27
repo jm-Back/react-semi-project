@@ -10,6 +10,10 @@
     box-shadow: 1px 1px 10px 1px hwb(0 53% 47% / 0.35);
 }
 
+.ticker-container:nth-child(1) {
+    margin-left: -30px;
+}
+
 /*슬라이더*/
 .ticker-item {
     min-width: 100%;
@@ -21,6 +25,10 @@
 }
 
 /*그냥 차트 */
+
+.simple-ticker {
+    justify-content: center;
+}
 
 .simple-ticker .label {
     font-weight: bold;
@@ -56,6 +64,7 @@
 
 .name {
     font-weight: 600;
+    font-size: 17px;
 }
 
 .price {

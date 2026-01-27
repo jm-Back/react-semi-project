@@ -59,5 +59,6 @@
 }
 
 .GoldItem .button_section {
-    min-width: 70px;
+    width: 100px;
+    justify-content: center;
 }

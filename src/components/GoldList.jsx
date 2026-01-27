@@ -1,7 +1,8 @@
-import Button from "./Button";
+import Button from "./common/Button";
 import "./GoldList.css"
 import GoldItem from "./GoldItem"
 import GoldNewModal from "./GoldNewModal";
+import NoData from "./common/NoData";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -25,8 +26,6 @@ const GoldList = ({ data }) => {
     }
 
     const sortedData = getSortedData();
-
-    console.log(data);
 
     return (
         <div>
@@ -56,7 +55,11 @@ const GoldList = ({ data }) => {
 
                 </div>
                 <div className="list_wrapper">
-                    {sortedData.map((item) => <GoldItem key={item.seq} {...item} />)}
+                    {sortedData.length === 0 ? (
+                        <NoData message="거래 기록이 없습니다" />
+                    ) : (
+                        sortedData.map((item) => <GoldItem key={item.seq} {...item} />)
+                    )}
                 </div>
             </div>
         </div>

@@ -2,13 +2,13 @@ import { useContext, useState } from "react";
 import { GoldTrackerStateContext } from "../App";
 
 import Header from "../components/Header";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import GoldList from "../components/GoldList";
 
 import GoldChart from "../components/GoldChart";
 import GoldTrader from "../components/GoldTrader";
 import GoldAssetSummary from "../components/GoldAssetSummary";
-import GoldStampCalendar from "../components/GoldStampCalendar";
+import GoldPriceChart from "../components/GoldPriceChart";
 
 
 import "./Home.css";
@@ -71,6 +71,16 @@ const Home = () => {
                 <GoldTrader type="TODAY_PRICE" />
             </div>
 
+
+            <div className="top-section">
+                <div className="section-2">
+                    <h3>🪙 금 시세 & 거래 타임라인</h3>
+                    <GoldPriceChart
+                    />
+                </div>
+
+            </div>
+
             <div className="date-selector">
                 <div className="date_left"><Button onClick={onDecreaseMonth} text={"<"} /></div>
                 <div className="date_center">
@@ -78,20 +88,13 @@ const Home = () => {
                         {pivotDate.getFullYear()}년 {pivotDate.getMonth() + 1}월
                     </span></div>
                 <div className="date_right"><Button onClick={onIncreaseMonth} text={">"} /></div>
-
             </div>
             <div className="top-section">
-                <div className="section-2">
-                    <h3>🪙 금 매입/매도 캘린더</h3>
-                    <GoldStampCalendar paidDates={goldPaidDates} pivotDate={pivotDate}
-                    />
-                </div>
                 <div className="section-3">
                     <GoldList data={monthlyData} />
                 </div>
             </div>
 
-            <hr />
             <div className="top-section">
                 <div className="section-4">
                     <h3>📌 {pivotDate.getMonth() + 1}월 금장부 요약</h3>

@@ -1,5 +1,5 @@
 import { getGoldImage } from "../util/get-gold-image"
-import Button from "./Button"
+import Button from "./common/Button"
 import "./GoldItem.css"
 import { useNavigate } from "react-router-dom"
 
@@ -7,8 +7,6 @@ const GoldItem = ({ seq, purchaseDate, categoryId, gram, type, price, targetData
 
     const nav = useNavigate(); //네비게이트 함수 저장 
 
-
-    console.log(seq);
     return (
         <div className="GoldItem">
             <div
@@ -28,7 +26,7 @@ const GoldItem = ({ seq, purchaseDate, categoryId, gram, type, price, targetData
                 </div>
             </div>
             <div className="button_section">
-                <Button onClick={() => nav(`/edit/${seq}`)} text={"수정하기"} />
+                <Button onClick={() => nav(`/edit/${seq}`)} type={"DELETE"} text={"삭제"} />
             </div>
         </div>
     )

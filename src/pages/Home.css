@@ -6,8 +6,9 @@
 
 
 .section-2 {
-    width: 40%;
+    width: 82%;
     padding-top: 20px;
+    height: 350px;
     /* 캘린더 고정폭 */
 }
 
@@ -16,8 +17,8 @@
 }
 
 .section-3 {
-    width: 50%;
-    padding-top: 50px;
+    width: 90%;
+    padding-top: 10px;
     padding-left: 10px;
 }
 
@@ -49,7 +50,7 @@ hr {
 
 /*날짜 선택기*/
 .date-selector {
-    padding-top: 60px;
+    padding-top: 130px;
     display: flex;
     justify-content: center;
     /* 가로 중앙 */
@@ -62,7 +63,7 @@ hr {
 }
 
 .date-selector .date_center {
-    font-size: 29px;
+    font-size: 25px;
     color: hwb(0 27% 73%);
     font-weight: bolder;
 }
