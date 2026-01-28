@@ -2,6 +2,7 @@ import Button from "./common/Button";
 import "./GoldList.css"
 import GoldItem from "./GoldItem"
 import GoldNewModal from "./GoldNewModal";
+import GoldSellModal from "./GoldSellModal";
 import NoData from "./common/NoData";
 
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ const GoldList = ({ data }) => {
     const [sortType, setSortType] = useState("latest");
     //금 매입 기록 :: 모달 
     const [isNewOpen, setIsNewOpen] = useState(false);
+    const [isSellOpen, setIsSellOpen] = useState(false);
+
 
     const onChangeSortType = (e) => {
         setSortType(e.target.value);
@@ -51,9 +54,12 @@ const GoldList = ({ data }) => {
                         )}
                     </div>
                     <div>
-                        <Button onClick={() => nav(`/record`)} text={"매도👋🏻"}
+                        <Button onClick={() => setIsSellOpen(true)} text={"매도👋🏻"}
                             type={"NEGATIVE"}
                         />
+                        {isSellOpen && (
+                            <GoldSellModal onClose={() => setIsSellOpen(false)} />
+                        )}
                     </div>
 
                 </div>
