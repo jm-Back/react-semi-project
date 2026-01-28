@@ -1,6 +1,6 @@
 import "./GoldNewModal.css";
 import { useContext, useState } from "react";
-import { GoldTrackerDispatchContext } from "../App";
+import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 
 const GoldNewModal = ({ onClose }) => {
     const { onCreate } = useContext(GoldTrackerDispatchContext);

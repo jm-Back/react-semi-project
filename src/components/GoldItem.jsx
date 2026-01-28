@@ -3,7 +3,7 @@ import Button from "./common/Button"
 import "./GoldItem.css"
 import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
-import { GoldTrackerDispatchContext } from "../App";
+import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 
 const GoldItem = ({ seq, purchaseDate, categoryId, gram, type, price, targetData }) => {
 

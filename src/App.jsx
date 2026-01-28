@@ -3,11 +3,13 @@ import './App.css'
 import { createContext, useReducer, useRef } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { AssetProvider } from "./context/AssetContext";
+import { GoldTrackerDispatchContext } from "./context/GoldTrackerDispatchContext"
+import { reducer } from "./context/reducer";
 
 import Home from './pages/Home';
 
 export const GoldTrackerStateContext = createContext();
-export const GoldTrackerDispatchContext = createContext();
+// export const GoldTrackerDispatchContext = createContext();
 
 
 const mockData = [
@@ -43,66 +45,40 @@ const mockData = [
     },
 ];
 
-function reducer(state, action) {
-    switch (action.type) {
-        case "CREATE": return [action.data, ...state];
-        case "UPDATE": return state.map((item) => String(item.seq) === String(action.data.seq) ? action.data : item);
-        case "DELETE": return state.filter((item) => String(item.seq) !== String(action.seq));
-        default: return state;
-    }
-}
-
-
 function App() {
     const [data, dispatch] = useReducer(reducer, mockData);
     const idRef = useRef(5);  //3으로 초기화
 
-    //장부 추가 
-    const onCreate = (purchaseDate, categoryId, gram, type, price, targetData, content) => {
-        dispatch({
-            type: "CREATE",
-            data: {
-                seq: idRef.current++,
-                purchaseDate,
-                categoryId,
-                gram,
-                type,
-                price,
-                targetData,
-                content,
-            },
-        })
-    }
+    // //장부 추가 
+    // const onCreate = (purchaseDate, categoryId, gram, type, price, targetData, content) => {
+    //     dispatch({
+    //         type: "CREATE",
+    //         data: {
+    //             seq: idRef.current++,
+    //             purchaseDate,
+    //             categoryId,
+    //             gram,
+    //             type,
+    //             price,
+    //             targetData,
+    //             content,
+    //         },
+    //     })
+    // }
 
-    //수정 가능한 모든 데이터를 받아오도록 설정해야 한다. 
-    const onUpdate = (seq, purchaseDate, categoryId, gram, type, targetData, content) => {
-        dispatch({
-            type: "UPDATE",
-            data: {
-                seq,
-                purchaseDate,
-                categoryId,
-                gram,
-                type,
-                targetData,
-                content,
-            },
-        })
-    }
-
-    //삭제
-    const onDelete = (seq) => {
-        dispatch({
-            type: "DELETE",
-            seq
-        })
-    }
+    // //삭제
+    // const onDelete = (seq) => {
+    //     dispatch({
+    //         type: "DELETE",
+    //         seq
+    //     })
+    // }
 
     return (
         <>
             <AssetProvider>
                 <GoldTrackerStateContext.Provider value={data}>
-                    <GoldTrackerDispatchContext.Provider value={{ onCreate, onDelete, onUpdate }}>
+                    <GoldTrackerDispatchContext.Provider value={dispatch}>
                         <Routes>
                             <Route path='/' element={<Home />}></Route>
                         </Routes>
