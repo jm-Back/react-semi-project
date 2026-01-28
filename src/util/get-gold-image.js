@@ -4,8 +4,8 @@ import gold_image from "../assets/gold_image.png"
 
 export function getGoldImage(goldId) {
     switch (goldId) {
-        case "y": return gold_image;
-        case "n": return gold_image_gray;
+        case "BUY": return gold_image;
+        case "SELL": return gold_image_gray;
         default: return null;
     }
 }

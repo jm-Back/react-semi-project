@@ -21,6 +21,7 @@ const GoldList = ({ data }) => {
         return data.toSorted((a, b) => {
             if (sortType == "higher") return Number(a.price) - Number(b.price);
             else if (sortType == "cheaper") return Number(b.price) - Number(a.price);
+            else if (sortType == "heavy") return Number(b.gram) - Number(a.gram);
             else return Number(b.purchaseDate) - Number(a.purchaseDate);
         })
     }
@@ -35,6 +36,8 @@ const GoldList = ({ data }) => {
                         <option value={"latest"}>최신순</option>
                         <option value={"cheaper"}> 가격 낮은순</option>
                         <option value={"higher"}> 가격 높은순</option>
+                        <option value={"heavy"}> 무게순</option>
+
                     </select>
                     <div>
                         <Button

@@ -14,7 +14,7 @@ const mockData = [
         seq: 1,
         purchaseDate: new Date("2026-01-03").getTime(),
         categoryId: 1,
-        gram: 5,
+        gram: 10,
         type: "BUY",
         price: 34000,
         content: "국제금 4% 급락으로 구매완료!"

@@ -6,7 +6,7 @@ const Header = ({ title }) => {
     return (
         <header className="Header">
             <div className="logo">
-                <img src={getGoldImage("y")}></img>
+                <img src={getGoldImage("BUY")}></img>
                 <div className="logo_name">금장부</div>
             </div>
             <div className="header_left">{ }</div>

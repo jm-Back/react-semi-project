@@ -17,13 +17,14 @@ export default function GoldTrader({ type }) {
 
         if (type === "TOTAL_ASSET") {
             setItems([
-                { label: "총자산", value: 12340000 },
+                { label: "금 보유량 (단위: g)", value: 10.75 },
+
             ]);
         }
 
         if (type === "PROFIT_LOSS") {
             setItems([
-                { label: "평가손익", value: +120000, flag: "▲" },
+                { label: "오늘자 평가손익", value: +120000, flag: "▲" },
             ]);
         }
     }, [type]);
