@@ -9,8 +9,6 @@ import { reducer } from "./context/reducer";
 import Home from './pages/Home';
 
 export const GoldTrackerStateContext = createContext();
-// export const GoldTrackerDispatchContext = createContext();
-
 
 const mockData = [
     {
@@ -50,35 +48,35 @@ function App() {
     const idRef = useRef(5);  //3으로 초기화
 
     // //장부 추가 
-    // const onCreate = (purchaseDate, categoryId, gram, type, price, targetData, content) => {
-    //     dispatch({
-    //         type: "CREATE",
-    //         data: {
-    //             seq: idRef.current++,
-    //             purchaseDate,
-    //             categoryId,
-    //             gram,
-    //             type,
-    //             price,
-    //             targetData,
-    //             content,
-    //         },
-    //     })
-    // }
+    const onCreate = (purchaseDate, categoryId, gram, type, price, targetData, content) => {
+        dispatch({
+            type: "CREATE",
+            data: {
+                seq: idRef.current++,
+                purchaseDate,
+                categoryId,
+                gram,
+                type,
+                price,
+                targetData,
+                content,
+            },
+        })
+    }
 
-    // //삭제
-    // const onDelete = (seq) => {
-    //     dispatch({
-    //         type: "DELETE",
-    //         seq
-    //     })
-    // }
+    //삭제
+    const onDelete = (seq) => {
+        dispatch({
+            type: "DELETE",
+            seq
+        })
+    }
 
     return (
         <>
             <AssetProvider>
                 <GoldTrackerStateContext.Provider value={data}>
-                    <GoldTrackerDispatchContext.Provider value={dispatch}>
+                    <GoldTrackerDispatchContext.Provider value={{ onDelete, onCreate }}>
                         <Routes>
                             <Route path='/' element={<Home />}></Route>
                         </Routes>
