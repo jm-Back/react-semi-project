@@ -1,10 +1,14 @@
 import './App.css'
 
-import { createContext, useReducer, useRef } from 'react';
+import { createContext, useReducer, useRef, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { AssetProvider } from "./context/AssetContext";
 import { GoldTrackerDispatchContext } from "./context/GoldTrackerDispatchContext"
 import { reducer } from "./context/reducer";
+
+
+//백엔드 통신 테스트 
+import { getCategoryAssetLotData } from './api/assetLotApi';
 
 import Home from './pages/Home';
 
@@ -44,6 +48,31 @@ const mockData = [
 ];
 
 function App() {
+
+    useEffect(() => {
+        getCategoryAssetLotData()
+            .then(res => {
+                console.log("응답 데이터:", res.data);
+            })
+            .catch(err => {
+                console.error("API 에러:", err);
+            });
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const [data, dispatch] = useReducer(reducer, mockData);
     const idRef = useRef(5);  //3으로 초기화
 

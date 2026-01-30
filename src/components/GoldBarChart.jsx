@@ -89,25 +89,6 @@ export default function DoughnutChart() {
                 barPercentage: 1.0,
                 categoryPercentage: 1.0,
             },
-            {
-                label: 'KRX금현물',
-                data: [4000],
-                backgroundColor: chartColorList[3],
-                animation: {
-                    duration: 600,
-                    easing: 'easeOutQuart',
-                },
-                stack: 'asset',
-
-                borderRadius: {
-                    topRight: 8,
-                    bottomRight: 8,
-                },
-
-                // ⭐ 여기!
-                barPercentage: 1.0,
-                categoryPercentage: 1.0,
-            },
         ],
     };
 

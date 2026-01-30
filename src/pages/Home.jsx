@@ -97,7 +97,7 @@ const Home = () => {
 
             <div className="top-section">
                 <div className="section-4">
-                    <h3>📌 {pivotDate.getMonth() + 1}월 금장부 요약</h3>
+                    <h3>📌 자산 카테고리 집계</h3>
                     <GoldBarChart />
                 </div>
 
