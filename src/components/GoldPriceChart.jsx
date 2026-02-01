@@ -1,6 +1,7 @@
 import {
     Chart as ChartJS,
     LineElement,
+    ScatterController,
     PointElement,
     LinearScale,
     TimeScale,
@@ -16,6 +17,7 @@ import sellImg from "../assets/gold_image_gray.png";
 
 ChartJS.register(
     LineElement,
+    ScatterController,
     PointElement,
     LinearScale,
     TimeScale,
