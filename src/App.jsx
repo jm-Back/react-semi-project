@@ -49,15 +49,15 @@ const mockData = [
 
 function App() {
 
-    useEffect(() => {
-        getCategoryAssetLotData()
-            .then(res => {
-                console.log("응답 데이터:", res.data);
-            })
-            .catch(err => {
-                console.error("API 에러:", err);
-            });
-    }, []);
+    // useEffect(() => {
+    //     getCategoryAssetLotData()
+    //         .then(res => {
+    //             console.log("응답 데이터:", res.data);
+    //         })
+    //         .catch(err => {
+    //             console.error("API 에러:", err);
+    //         });
+    // }, []);
 
 
 
