@@ -1,150 +1,92 @@
-/* GoldModal.css */
-
-/* 배경 */
-.modal_backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 1000;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 모달 카드 */
 .modal {
-    width: 420px;
-    background: #ffffff;
+    width: 800px;
+    /* 🔥 기존보다 2배 체감 */
+    max-width: 95vw;
+
+    max-height: 90vh;
+    /* 화면 넘치지 않게 */
+    overflow-y: auto;
+    /* 내부 스크롤 */
+
+    padding: 24px;
     border-radius: 16px;
-    padding: 24px 26px;
-
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    animation: modalFadeUp 0.25s ease-out;
 }
 
-/* 타이틀 */
-.modal h2 {
-    margin-bottom: 8px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #2c2c2c;
+.date_label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
 }
 
-/* 공통 input/select/textarea */
-.modal input,
-.modal select,
-.modal textarea {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-
-    border-radius: 8px;
-    border: 1px solid #ddd;
-
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.modal input:focus,
-.modal select:focus,
-.modal textarea:focus {
-    border-color: #ffbf00;
-    box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
-}
-
-/* textarea */
-.modal textarea {
-    resize: none;
-    min-height: 100px;
-}
-
-/* 버튼 영역 */
-.modal_btns {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* 저장 버튼 */
-.modal_btns button:first-child {
-    flex: 1;
-    background: #ffbf00;
-    color: #fff;
-    border: none;
-
-    padding: 10px 0;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-
-    transition: background 0.2s, transform 0.1s;
-}
-
-.modal_btns button:first-child:hover {
-    background: #e6ac00;
-    transform: translateY(-1px);
-}
-
-/* 취소 버튼 */
-.modal_btns button:last-child {
-    flex: 1;
-    background: #f1f1f1;
-    color: #555;
-    border: none;
-
-    padding: 10px 0;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.modal_btns button:last-child:hover {
-    background: #e2e2e2;
-}
-
-/* 등장 애니메이션 */
-@keyframes modalFadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* row 형태 input + select */
 .row {
     display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.row input[type="date"] {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+
+/* ======================
+   자산 선택 영역
+====================== */
+.asset_section {
+    margin-bottom: 16px;
+}
+
+.asset_select_list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 🔥 3열 고정 */
     gap: 12px;
 }
 
-.row input,
-.row select {
-    flex: 1;
-    /* 균등 분할 */
+/* ======================
+     자산 카드
+  ====================== */
+.asset_card {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    background-color: #fff;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* 숫자 입력 오른쪽 정렬 */
-.modal input[type="number"] {
-    text-align: right;
+
+.asset_card:hover {
+    border-color: #ffbc20;
+    background-color: #fffaf0;
 }
 
-.modal input,
-.modal select,
-.modal textarea {
-    box-sizing: border-box;
-    /* 크기 안정화 */
+.asset_card.active {
+    border: 2px solid #ffbc20;
+    background-color: #fff6db;
+
+    box-shadow: 0 6px 18px rgba(255, 188, 32, 0.35);
+    transform: scale(1.02);
+}
+
+/* ======================
+     카드 내부 텍스트
+  ====================== */
+.asset_name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.asset_meta {
+    display: flex;
+    /* 🔥 이게 제일 중요 */
+    justify-content: space-between;
+    /* g / 금액 분리 */
+    font-size: 12px;
+    color: #666;
 }
