@@ -1,6 +1,6 @@
 .ticker-container {
-    width: 290px;
-    height: 130px;
+    width: 275px;
+    height: 110px;
     overflow: hidden;
     border-radius: 10px;
     background: rgb(255, 255, 255);
@@ -58,7 +58,7 @@
 
 /*미니차트*/
 .mini-chart {
-    width: 30%;
+    width: 20%;
     height: 40px;
 }
 

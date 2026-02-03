@@ -15,7 +15,6 @@ const GoldSellModal = ({ onClose }) => {
         content: "",
     });
 
-
     const availableQuantity = getAvailableQuantity(form.assetType || "BAR");
 
     // 유효성 검사 포함

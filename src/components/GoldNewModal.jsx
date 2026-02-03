@@ -5,38 +5,36 @@ import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContex
 const GoldNewModal = ({ onClose }) => {
     const { onCreate } = useContext(GoldTrackerDispatchContext);
     const [form, setForm] = useState({
-        purchaseDate: Date.now(),
-        categoryId: "",
-        gram: "",
-        type: "BUY",
-        targetData: null,
+        tradeType: "BUY",
+        tradeDate: Date.now(),
+        assetType: "",
+        quantityG: "",
+        tradeAmount: "",
         content: "",
-        price: "",
     });
 
     //유효성 검사 포함 
     const handleSubmit = () => {
-        const gram = Number(form.gram);
-        const price = Number(form.price);
+        const quantityG = Number(form.quantityG);
+        const tradeAmount = Number(form.tradeAmount);
 
-        if (!gram || gram <= 0) {
+        if (!quantityG || quantityG <= 0) {
             alert("그램(g)을 올바르게 입력해주세요");
             return;
         }
 
-        if (!price || price <= 0) {
+        if (!tradeAmount || tradeAmount <= 0) {
             alert("매입가를 올바르게 입력해주세요");
             return;
         }
 
         onCreate(
-            form.purchaseDate,
-            form.categoryId,
-            gram,
             "BUY",
-            null,
-            form.content,
-            price
+            form.tradeDate,
+            form.assetType,
+            quantityG,
+            tradeAmount,
+            form.content
         );
 
         onClose();
@@ -47,35 +45,31 @@ const GoldNewModal = ({ onClose }) => {
             <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <h2>금 매입 기록 ✨</h2>
 
-
                 <div className="row">
                     <input type="date" onChange={(e) =>
-                        setForm({ ...form, purchaseDate: new Date(e.target.value).getTime(), })} />
+                        setForm({ ...form, tradeDate: new Date(e.target.value).getTime(), })} />
 
                     <select onChange={(e) =>
-                        setForm({ ...form, categoryId: e.target.value })}>
-                        <option value={"bar"}>골드바</option>
-                        <option value={"cong"}>콩알금</option>
-                        <option value={"acc"}>귀금속</option>
-                        <option value={"krx"}>KRX금현물</option>
+                        setForm({ ...form, assetType: e.target.value })}>
+                        <option value={"CNG"}>콩알금</option>
+                        <option value={"BAR"}>골드바</option>
+                        <option value={"ACC"}>귀금속</option>
                     </select>
                 </div>
 
-
-                <input placeholder="그램(g)"
+                <input placeholder="총 그램(g)"
                     min="0"
                     step="0.01"
                     type="number"
-                    value={form.gram}
+                    value={form.quantityG}
                     onChange={(e) =>
-                        setForm({ ...form, gram: e.target.value })} />
+                        setForm({ ...form, quantityG: e.target.value })} />
                 <input placeholder="매입가"
                     min="0"
                     type="number"
-                    value={form.price}
+                    value={form.tradeAmount}
                     onChange={(e) =>
-                        setForm({ ...form, price: e.target.value })} />
-
+                        setForm({ ...form, tradeAmount: e.target.value })} />
                 <textarea
                     placeholder="메모"
                     onChange={(e) =>

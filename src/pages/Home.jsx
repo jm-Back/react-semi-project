@@ -3,8 +3,8 @@ import { GoldTrackerStateContext } from "../App";
 
 import Header from "../components/Header";
 import Button from "../components/common/Button";
-import GoldList from "../components/GoldList";
 
+import GoldList from "../components/GoldList";
 import GoldBarChart from "../components/GoldBarChart";
 import GoldTrader from "../components/GoldTrader";
 import GoldAssetSummary from "../components/GoldAssetSummary";
@@ -25,14 +25,14 @@ const getMonthlyDate = (pivotDate, data) => {
         59
     ).getTime();
 
-    return data.filter((item) => beginTime <= item.purchaseDate && item.purchaseDate <= endTime)
+    return data.filter((item) => beginTime <= item.tradeDate && item.tradeDate <= endTime)
 }
 
 const Home = () => {
 
     const data = useContext(GoldTrackerStateContext)
 
-    //날짜 보관 
+    //날짜 보관 : 오늘자 기준 월 데이터 필터링 => DB연결하면 지워도 될듯 
     const [pivotDate, setPivotDate] = useState(new Date());
     const monthlyData = getMonthlyDate(pivotDate, data);
 
@@ -104,7 +104,6 @@ const Home = () => {
             </div>
         </div>
     )
-
 };
 
 export default Home;

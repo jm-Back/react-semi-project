@@ -37,19 +37,7 @@ sellStamp.width = 30;
 sellStamp.height = 24;
 
 export default function GoldPriceChart({ }) {
-    /**
-     * priceData 예시
-     * [
-     *   { x: "2026-01-01", y: 82000 },
-     *   { x: "2026-01-02", y: 83000 },
-     * ]
-     *
-     * transactions 예시
-     * [
-     *   { date: "2026-01-02", type: "BUY", status: "VALID" },
-     *   { date: "2026-01-03", type: "SELL", status: "VALID" }
-     * ]
-     */
+
     const priceData = [
         { x: "2026-01-01", y: 82000 },
         { x: "2026-01-02", y: 82300 },

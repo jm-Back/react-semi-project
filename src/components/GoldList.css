@@ -20,10 +20,12 @@
 }
 
 .list_wrapper {
-    flex-direction: column;
-    /* ⭐ 세로 정렬 */
-    height: 310px;
-    /* ⭐ 원하는 높이 */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    height: 320px;
+    padding: 6px;
+
     overflow-y: auto;
-    /* ⭐ 세로 스크롤 */
 }
