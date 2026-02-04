@@ -26,7 +26,7 @@ export default function GoldAssetSummary({ name, holdings, }) {
             </span>
             <span>입니다. </span>
             <div className={`summary-mention fade-slide ${show ? "show" : ""}`}>
-                📢 <span></span><a> 나의 전체 매입/매도 기록 보러가기</a>
+                📢 <span></span><a href="https://obank.kbstar.com/quics?page=C023489#loading"> KB국민은행 골드 가격조회 및 시장동향</a>
             </div>
         </div>
     );
