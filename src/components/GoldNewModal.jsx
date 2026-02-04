@@ -1,4 +1,6 @@
 import "./GoldNewModal.css";
+import { formatNumber } from "../util/get-comma.js";
+
 import { useContext, useState } from "react";
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 
@@ -64,12 +66,21 @@ const GoldNewModal = ({ onClose }) => {
                     value={form.quantityG}
                     onChange={(e) =>
                         setForm({ ...form, quantityG: e.target.value })} />
-                <input placeholder="매입가"
-                    min="0"
-                    type="number"
-                    value={form.tradeAmount}
-                    onChange={(e) =>
-                        setForm({ ...form, tradeAmount: e.target.value })} />
+                <input
+                    type="text"
+                    placeholder="매입가"
+                    value={formatNumber(form.tradeAmount)}
+                    onChange={(e) => {
+                        const rawValue = e.target.value.replace(/,/g, ""); // 숫자만
+                        if (!/^\d*$/.test(rawValue)) return; // 숫자만 허용
+
+                        setForm({
+                            ...form,
+                            tradeAmount: rawValue,
+                        });
+                    }}
+                />
+
                 <textarea
                     placeholder="메모"
                     onChange={(e) =>

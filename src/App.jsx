@@ -49,7 +49,7 @@ const mockData = [
         content: "귀금속으로 구매했다 오래 껴야지 ^_^"
     },
     {
-        seq: 3,
+        seq: 4,
         tradeDate: new Date("2026-02-26").getTime(),
         tradeType: "BUY",
         code: 'ACC',
@@ -60,7 +60,7 @@ const mockData = [
         content: "귀금속으로 구매했다 오래 껴야지 ^_^"
     },
     {
-        seq: 3,
+        seq: 5,
         tradeDate: new Date("2026-02-26").getTime(),
         tradeType: "BUY",
         code: 'ACC',
@@ -71,18 +71,7 @@ const mockData = [
         content: "귀금속으로 구매했다 오래 껴야지 ^_^"
     },
     {
-        seq: 3,
-        tradeDate: new Date("2026-02-26").getTime(),
-        tradeType: "BUY",
-        code: 'ACC',
-        gram: 3.75,
-        tradeAmount: 223000,
-        unitPrice: 3000,
-        realizedProfit: 0,
-        content: "귀금속으로 구매했다 오래 껴야지 ^_^"
-    },
-    {
-        seq: 3,
+        seq: 6,
         tradeDate: new Date("2026-02-26").getTime(),
         tradeType: "BUY",
         code: 'ACC',
@@ -108,8 +97,6 @@ function App() {
 
 
     const [data, dispatch] = useReducer(reducer, mockData);
-
-    console.log(data);
 
     // //장부 추가 
     const onCreate = (tradeType, tradeDate, assetType, quantityG, tradeAmount, content) => {

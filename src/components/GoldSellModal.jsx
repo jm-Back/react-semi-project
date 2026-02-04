@@ -1,4 +1,6 @@
 import "./GoldSellModal.css";
+import { formatNumber } from "../util/get-comma.js";
+
 import { useContext, useState } from "react";
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 import { useAssets } from "../context/AssetContext";
@@ -6,36 +8,32 @@ import { useAssets } from "../context/AssetContext";
 
 const mockAssetLots = [
     {
-        lotId: 101,
-        code: "BAR",
+        seq: 101,
         name: "골드바 10g",
-        quantity: 10,
-        buyPrice: 980000,
-        buyDate: "2025-12-01",
+        gram: 10,
+        tradeDate: "2025-01-02",
+        tradeAmount: 980000,
     },
     {
-        lotId: 102,
-        code: "CNG",
+        seq: 102,
         name: "콩알금 3.5g",
-        quantity: 3.5,
-        buyPrice: 340000,
-        buyDate: "2026-01-15",
+        gram: 3.5,
+        tradeDate: "2025-01-02",
+        tradeAmount: 980000,
     },
     {
-        lotId: 103,
-        code: "ACC_24",
+        seq: 103,
         name: "24K 반지",
-        quantity: 5,
-        buyPrice: 520000,
-        buyDate: "2025-11-03",
+        gram: 5,
+        tradeDate: "2025-01-02",
+        tradeAmount: 980000,
     },
     {
-        lotId: 213,
-        code: "ACC_24",
+        seq: 213,
         name: "24K 반지",
-        quantity: 5,
-        buyPrice: 520000,
-        buyDate: "2025-11-03",
+        gram: 5,
+        tradeDate: "2025-01-02",
+        tradeAmount: 980000,
     },
 ];
 
@@ -46,7 +44,9 @@ const GoldSellModal = ({ onClose }) => {
 
     const [selectedLot, setSelectedLot] = useState(null);
     const [form, setForm] = useState({
+        seq: 0,
         tradeDate: Date.now(),
+        tradeType: "SELL",
         tradeAmount: "",
         content: "",
     });
@@ -65,11 +65,34 @@ const GoldSellModal = ({ onClose }) => {
             return;
         }
 
+        console.table([{
+            seq: selectedLot.seq,
+            type: "SELL",
+            tradeDate: form.tradeDate,
+            name: selectedLot.name,
+            gram: selectedLot.gram,
+            tradeAmount: Number(form.tradeAmount),
+            content: form.content,
+        }]);
+
+
         onCreate(
+            selectedLot.seq,
             "SELL",
-            Date.now(),
-            selectedLot.code,
-            selectedLot.quantity, // 🔥 수량은 LOT 기준 고정
+            form.tradeDate,
+            selectedLot.name,
+            selectedLot.gram,
+            Number(form.tradeAmount),
+            form.content
+        );
+
+
+        onCreate(
+            selectedLot.seq,
+            "SELL",
+            form.tradeDate,
+            selectedLot.name,
+            selectedLot.gram, // 🔥 수량은 LOT 기준 고정
             Number(form.tradeAmount),
             form.content
         );
@@ -101,15 +124,15 @@ const GoldSellModal = ({ onClose }) => {
                     <div className="asset_select_list">
                         {mockAssetLots.map((lot) => (
                             <div
-                                key={lot.lotId}
-                                className={`asset_card ${selectedLot?.lotId === lot.lotId ? "active" : ""
+                                key={lot.seq}
+                                className={`asset_card ${selectedLot?.seq === lot.seq ? "active" : ""
                                     }`}
                                 onClick={() => setSelectedLot(lot)}
                             >
                                 <div className="asset_name">{lot.name}</div>
                                 <div className="asset_meta">
-                                    <span>{lot.quantity} g</span>
-                                    <span>{lot.buyPrice.toLocaleString()}원</span>
+                                    <span>{lot.gram} g</span>
+                                    <span>{lot.tradeAmount.toLocaleString()}원</span>
                                 </div>
                             </div>
                         ))}
@@ -117,12 +140,18 @@ const GoldSellModal = ({ onClose }) => {
                 </div>
 
                 <input
-                    type="number"
+                    type="text"
                     placeholder="총 매도 금액"
-                    value={form.tradeAmount}
-                    onChange={(e) =>
-                        setForm({ ...form, tradeAmount: e.target.value })
-                    }
+                    value={formatNumber(form.tradeAmount)}  //import 한 콤마 찍는거 
+                    onChange={(e) => {
+                        const rawValue = e.target.value.replace(/,/g, ""); // 숫자만
+                        if (!/^\d*$/.test(rawValue)) return; // 숫자만 허용
+
+                        setForm({
+                            ...form,
+                            tradeAmount: rawValue,
+                        });
+                    }}
                 />
 
                 <textarea

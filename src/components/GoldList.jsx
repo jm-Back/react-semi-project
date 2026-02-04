@@ -66,12 +66,17 @@ const GoldList = ({ data }) => {
 
                 </div>
                 <div className="list_wrapper">
-                    {sortedData.length === 0 ? (
-                        <NoData message="거래 기록이 없습니다" />
-                    ) : (
-                        sortedData.map((item) => <GoldItem key={item.seq} {...item} />)
+                    {sortedData.length === 0 && (
+                        <div className="no-data-wrapper">
+                            <NoData message="거래 기록이 없습니다" />
+                        </div>
                     )}
+
+                    {sortedData.map((item) => (
+                        <GoldItem key={item.seq} {...item} />
+                    ))}
                 </div>
+
             </div>
         </div>
     )

@@ -29,3 +29,13 @@
 
     overflow-y: auto;
 }
+
+/* NoData는 grid 영향 최소화 */
+.no-data-wrapper {
+    grid-column: 1 / -1;
+    /* 전체 폭 차지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 160px;
+}
