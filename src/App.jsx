@@ -8,7 +8,7 @@ import { reducer } from "./context/reducer";
 
 
 //백엔드 통신 테스트 
-import { getCategoryAssetLotData } from './api/assetLotApi';
+import { getCategoryData } from './api/assetApi';
 
 import Home from './pages/Home';
 
@@ -86,7 +86,7 @@ const mockData = [
 function App() {
 
     // useEffect(() => {
-    //     getCategoryAssetLotData()
+    //     getCategoryData()
     //         .then(res => {
     //             console.log("응답 데이터:", res.data);
     //         })
