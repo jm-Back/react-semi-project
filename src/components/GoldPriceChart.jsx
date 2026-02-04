@@ -15,6 +15,14 @@ import "./GoldPriceChart.css"
 import buyImg from "../assets/gold_image.png";
 import sellImg from "../assets/gold_image_gray.png";
 
+//백엔드 통신 테스트 
+import { useContext, useState, useEffect } from "react";
+import { GoldTrackerStateContext } from "../App";
+import { getGoldPrices } from '../api/common';
+import { yearsToMonths } from "date-fns";
+
+import { findNearestPrice } from "../util/find-nearest-price";
+
 ChartJS.register(
     LineElement,
     ScatterController,
@@ -36,117 +44,51 @@ sellStamp.src = sellImg;
 sellStamp.width = 30;
 sellStamp.height = 24;
 
+
+function toDateString(ms) {
+    return new Date(ms).toISOString().slice(0, 10);
+}
+
 export default function GoldPriceChart({ }) {
 
-    const priceData = [
-        { x: "2026-01-01", y: 82000 },
-        { x: "2026-01-02", y: 82300 },
-        { x: "2026-01-03", y: 82500 },
-        { x: "2026-01-04", y: 82200 },
-        { x: "2026-01-05", y: 82800 },
-        { x: "2026-01-06", y: 83000 },
-        { x: "2026-01-07", y: 83200 },
-        { x: "2026-01-08", y: 83500 },
-        { x: "2026-01-09", y: 83300 },
-        { x: "2026-01-10", y: 83800 },
+    const transactions = useContext(GoldTrackerStateContext)
+    const [goldPrices, setGoldPrices] = useState([]);
 
-        { x: "2026-01-11", y: 84000 },
-        { x: "2026-01-12", y: 84200 },
-        { x: "2026-01-13", y: 83900 },
-        { x: "2026-01-14", y: 84500 },
-        { x: "2026-01-15", y: 84800 },
-        { x: "2026-01-16", y: 84600 },
-        { x: "2026-01-17", y: 85000 },
-        { x: "2026-01-18", y: 85200 },
-        { x: "2026-01-19", y: 85500 },
-        { x: "2026-01-20", y: 85300 },
+    useEffect(() => {
+        getGoldPrices()
+            .then(res => setGoldPrices(res.data))
+            .catch(console.error);
+    }, []);
 
-        { x: "2026-01-21", y: 85700 },
-        { x: "2026-01-22", y: 86000 },
-        { x: "2026-01-23", y: 85800 },
-        { x: "2026-01-24", y: 86200 },
-        { x: "2026-01-25", y: 86500 },
-        { x: "2026-01-26", y: 86800 },
-        { x: "2026-01-27", y: 86600 },
-        { x: "2026-01-28", y: 87000 },
-        { x: "2026-01-29", y: 87300 },
-        { x: "2026-01-30", y: 87500 },
-    ];
+    const linePriceData = goldPrices.map(p => ({
+        x: p.date,
+        y: p.buyPrice375g,
+    }));
 
-    const transactions = [
-        {
-            id: 1,
-            date: "2026-01-02",
-            type: "BUY",
-            quantity: 10,
-            price: 82300,
-            status: "VALID",
-        },
-        {
-            id: 2,
-            date: "2026-01-05",
-            type: "BUY",
-            quantity: 5,
-            price: 82800,
-            status: "VALID",
-        },
-        {
-            id: 3,
-            date: "2026-01-07",
-            type: "SELL",
-            quantity: 8,
-            price: 83200,
-            status: "VALID",
-        },
-        {
-            id: 4,
-            date: "2026-01-12",
-            type: "BUY",
-            quantity: 7,
-            price: 84200,
-            status: "VALID",
-        },
-        {
-            id: 5,
-            date: "2026-01-15",
-            type: "SELL",
-            quantity: 6,
-            price: 84800,
-            status: "VALID",
-        },
-        {
-            id: 6,
-            date: "2026-01-20",
-            type: "BUY",
-            quantity: 4,
-            price: 85300,
-            status: "VALID",
-        },
-        {
-            id: 7,
-            date: "2026-01-25",
-            type: "SELL",
-            quantity: 5,
-            price: 86500,
-            status: "VALID",
-        },
-    ];
-
+    //goldPrices
     // 1️⃣ 날짜 → 시세 매핑
     const priceMap = Object.fromEntries(
-        priceData.map(p => [p.x, p.y])
+        linePriceData.map(p => [p.x, p.y])
     );
 
     // 2️⃣ 스탬프용 데이터 생성 (선 위 y값!)
     const stampData = transactions
-        .filter(tx => tx.status === "VALID")
-        .map(tx => ({
-            x: tx.date,
-            y: priceMap[tx.date],
-            type: tx.type,
-            pointStyle: tx.type === "BUY" ? buyStamp : sellStamp,
-        }))
-        .filter(p => p.y !== undefined);
+        .map(tx => {
+            const dateStr = toDateString(tx.tradeDate);
+            const y = priceMap[dateStr] ?? findNearestPrice(dateStr, priceMap);   //주말 시세 없는 데이터는 알아서
+
+            if (y === undefined) return null;
+
+            return {
+                x: dateStr,
+                y,
+                type: tx.tradeType,
+                pointStyle: tx.tradeType === "BUY" ? buyStamp : sellStamp,
+                gram: tx.gram,
+                unitPrice: tx.unitPrice,
+            };
+        })
+        .filter(Boolean);
 
     // 4️⃣ 차트 데이터
     const data = {
@@ -155,7 +97,7 @@ export default function GoldPriceChart({ }) {
                 type: "line",
                 events: [],
                 label: "금 시세",
-                data: priceData,
+                data: linePriceData,
                 borderColor: "#f4c430",
                 borderWidth: 3,
                 tension: 0.3,
@@ -167,7 +109,10 @@ export default function GoldPriceChart({ }) {
             {
                 type: "scatter",
                 data: stampData,
-                pointStyle: ctx => ctx.raw.pointStyle, // 가벼움
+                pointStyle: ctx => {
+                    if (!ctx.raw) return undefined;
+                    return ctx.raw.pointStyle;
+                },
                 pointRadius: 12,
                 pointHoverRadius: 14,
                 hitRadius: 10,
@@ -195,11 +140,13 @@ export default function GoldPriceChart({ }) {
                 callbacks: {
                     title: ctx => ctx[0].raw.x,
                     label: ctx => {
-                        const { type, y } = ctx.raw;
-                        return type === "BUY"
-                            ? `매입 @ ${y.toLocaleString()}원`
-                            : `매도 @ ${y.toLocaleString()}원`;
-                    },
+                        const tx = ctx.raw;
+                        return [
+                            tx.type === "BUY" ? "매입" : "매도",
+                            `${tx.gram}g`,
+                            `단가 ${tx.unitPrice.toLocaleString()}원`
+                        ];
+                    }
                 },
             },
         },
@@ -207,13 +154,22 @@ export default function GoldPriceChart({ }) {
             x: {
                 type: "time",
                 time: {
-                    unit: "day",
+                    unit: "month",
                     tooltipFormat: "yyyy-MM-dd",
+                    displayFormats: {
+                        month: "yyyy.MM",   // ← 핵심
+                    },
+                },
+                ticks: {
+                    callback: (value, index, ticks) => {
+                        const date = new Date(ticks[index].value);
+                        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}`;
+                    },
                 },
             },
             y: {
                 ticks: {
-                    stepSize: 3000, //간격
+                    stepSize: 5000, //간격
                     callback: value => value.toLocaleString() + "원",
                 },
             },

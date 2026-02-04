@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { GoldTrackerStateContext } from "../App";
+import { useState, useEffect } from "react";
 
 import Header from "../components/Header";
 import Button from "../components/common/Button";
@@ -10,49 +9,35 @@ import GoldTrader from "../components/GoldTrader";
 import GoldAssetSummary from "../components/GoldAssetSummary";
 import GoldPriceChart from "../components/GoldPriceChart";
 
-
 import "./Home.css";
-
-//해당 월 데이터 
-const getMonthlyDate = (pivotDate, data) => {
-    const beginTime = new Date(pivotDate.getFullYear(), pivotDate.getMonth(), 1, 0, 0, 0).getTime();
-    const endTime = new Date(
-        pivotDate.getFullYear(),
-        pivotDate.getMonth() + 1,
-        0,
-        23,
-        59,
-        59
-    ).getTime();
-
-    return data.filter((item) => beginTime <= item.tradeDate && item.tradeDate <= endTime)
-}
+import { getTradeList } from "../api/tradeApi"
 
 const Home = () => {
-
-    const data = useContext(GoldTrackerStateContext)
-
-    //날짜 보관 : 오늘자 기준 월 데이터 필터링 => DB연결하면 지워도 될듯 
     const [pivotDate, setPivotDate] = useState(new Date());
-    const monthlyData = getMonthlyDate(pivotDate, data);
+    const [monthlyData, setMonthlyData] = useState([]);
+
+    useEffect(() => {
+        const fetchMonthlyData = async () => {
+            try {
+                const res = await getTradeList({
+                    year: pivotDate.getFullYear(),
+                    month: pivotDate.getMonth() + 1, // 1~12
+                });
+                setMonthlyData(res.data);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchMonthlyData();
+    }, [pivotDate]);
 
     const onIncreaseMonth = () => {
         setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1));
     }
 
-
     const onDecreaseMonth = () => {
         setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1));
     }
-
-    //납입일
-    const goldPaidDates = [
-        "2026-01-05",
-        "2026-01-01",
-        "2026-01-11",
-        "2026-01-20",
-        "2026-01-26",
-    ];
 
     return (
         <div>

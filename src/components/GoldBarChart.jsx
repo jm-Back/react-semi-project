@@ -7,10 +7,14 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import "./GoldBarChart.css"
 import { chartColorList } from "../util/chart-color"
+import "./GoldBarChart.css"
 
 import NoData from "./common/NoData";
+
+//백엔드 통신 
+import { getCategoryData } from "../api/assetApi"
+import { useState, useEffect } from "react";
 
 ChartJS.register(
     BarElement,
@@ -19,7 +23,6 @@ ChartJS.register(
     Tooltip,
     ChartDataLabels
 );
-
 
 function AssetLegend({ datasets }) {
     return (
@@ -37,59 +40,39 @@ function AssetLegend({ datasets }) {
     );
 }
 
-
 export default function DoughnutChart() {
+
+    const [categoryValues, setCategoryValues] = useState([]);
+    useEffect(() => {
+        getCategoryData()
+            .then(res => setCategoryValues(res.data))
+            .catch(console.error);
+    }, []);
 
     const data = {
         labels: ['자산 비율'],
-        datasets: [
-            {
-                label: '콩알금',
-                data: [1000],
-                backgroundColor: chartColorList[0],
-                animation: {
-                    duration: 600,
-                    easing: 'easeOutQuart',
-                },
-                stack: 'asset',
+        datasets: categoryValues.map((item, idx) => ({
+            label: item.name,
+            data: [item.tradeAmount],
+            gram: item.gram,            // ⭐ 여기 추가
+            backgroundColor: chartColorList[idx % chartColorList.length],
+            stack: 'asset',
 
-                borderRadius: {
-                    topLeft: 8,
-                    bottomLeft: 8,
-                },
+            animation: {
+                duration: 600,
+                easing: 'easeOutQuart',
+            },
 
-                // ⭐ 여기!
-                barPercentage: 1.0,
-                categoryPercentage: 1.0,
-            },
-            {
-                label: '골드바',
-                data: [2000],
-                backgroundColor: chartColorList[1],
-                animation: {
-                    duration: 600,
-                    easing: 'easeOutQuart',
-                },
-                stack: 'asset',
+            barPercentage: 1.0,
+            categoryPercentage: 1.0,
 
-                // ⭐ 여기!
-                barPercentage: 1.0,
-                categoryPercentage: 1.0,
-            },
-            {
-                label: '귀금속',
-                data: [3000],
-                backgroundColor: chartColorList[2],
-                animation: {
-                    duration: 600,
-                    easing: 'easeOutQuart',
-                },
-                stack: 'asset',
-                // ⭐ 여기!
-                barPercentage: 1.0,
-                categoryPercentage: 1.0,
-            },
-        ],
+            borderRadius:
+                idx === 0
+                    ? { topLeft: 8, bottomLeft: 8 }
+                    : idx === categoryValues.length - 1
+                        ? { topRight: 8, bottomRight: 8 }
+                        : 0,
+        }))
     };
 
     //차트 옵션 
@@ -105,9 +88,15 @@ export default function DoughnutChart() {
             tooltip: {
                 enabled: true,
                 callbacks: {
-                    label: (ctx) =>
-                        `${ctx.dataset.label}: ${ctx.parsed.x.toLocaleString()}원`,
+                    label: (ctx) => {
+                        const { gram } = ctx.dataset;
+                        const amount = ctx.raw;
 
+                        return [
+                            `${gram}g`,
+                            `매입금액 ${amount.toLocaleString()}원`,
+                        ];
+                    },
                 },
             },
             datalabels: {
