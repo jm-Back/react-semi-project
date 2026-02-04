@@ -1,6 +1,8 @@
 .GoldItem {
     position: relative;
 
+    height: fit-content;
+
     display: grid;
     grid-template-columns: 90px 1fr;
     gap: 12px;
@@ -70,6 +72,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     /* ⭐ … 처리 */
+
+    height: 16px;
+    /* ⭐ 고정 */
+    line-height: 16px;
+    /* ⭐ */
 }
 
 
