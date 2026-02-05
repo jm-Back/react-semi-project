@@ -9,7 +9,7 @@ import { reducer } from "./context/reducer";
 import Home from './pages/Home';
 
 //백엔드
-import { getTradeList } from "./api/tradeApi/"
+import { getTradeList, saveTradeBuy, saveTradeSell } from "./api/tradeApi/"
 
 export const GoldTrackerStateContext = createContext();
 
@@ -31,19 +31,41 @@ function App() {
     }, []);
 
     // //장부 추가 
-    const onCreate = (tradeType, tradeDate, assetType, quantityG, tradeAmount, content) => {
-        dispatch({
-            type: "CREATE",
-            data: {
+    const onCreateBuy = async (tradeType, tradeDate, assetType, quantityG, tradeAmount, content) => {
+        try {
+            const res = await saveTradeBuy({
                 tradeType,
                 tradeDate,
                 assetType,
                 quantityG,
                 tradeAmount,
                 content,
-            },
-        })
+            });
+
+            dispatch({
+                type: "CREATE",
+                data: res.data,
+            });
+        } catch (e) {
+            console.error(e);
+            alert("저장 실패");
+        }
     }
+
+    const onCreateSell = async (seq, tradeDate, tradeType, tradeAmount, content) => {
+        try {
+            const res = await saveTradeSell({ seq, tradeDate, tradeType, tradeAmount, content });
+
+            console.log(res);
+            dispatch({
+                type: "CREATE",
+                data: res.data,
+            });
+        } catch (e) {
+            console.error(e);
+            alert("저장 실패");
+        }
+    };
 
     //삭제
     const onDelete = (seq) => {
@@ -57,7 +79,7 @@ function App() {
         <>
             <AssetProvider>
                 <GoldTrackerStateContext.Provider value={data}>
-                    <GoldTrackerDispatchContext.Provider value={{ onDelete, onCreate }}>
+                    <GoldTrackerDispatchContext.Provider value={{ onDelete, onCreateBuy, onCreateSell }}>
                         <Routes>
                             <Route path='/' element={<Home />}></Route>
                         </Routes>

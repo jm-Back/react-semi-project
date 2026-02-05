@@ -45,9 +45,14 @@ sellStamp.width = 30;
 sellStamp.height = 24;
 
 
-function toDateString(ms) {
-    return new Date(ms).toISOString().slice(0, 10);
-}
+const toDateString = (value) => {
+    if (!value) return null;
+
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return null;
+
+    return date.toISOString().split("T")[0];
+};
 
 export default function GoldPriceChart({ }) {
 
@@ -75,6 +80,8 @@ export default function GoldPriceChart({ }) {
     const stampData = transactions
         .map(tx => {
             const dateStr = toDateString(tx.tradeDate);
+            if (!dateStr) return null;
+
             const y = priceMap[dateStr] ?? findNearestPrice(dateStr, priceMap);   //주말 시세 없는 데이터는 알아서
 
             if (y === undefined) return null;

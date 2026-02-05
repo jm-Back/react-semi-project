@@ -1,51 +1,30 @@
 import "./GoldSellModal.css";
 import { formatNumber } from "../util/get-comma.js";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 import { useAssets } from "../context/AssetContext";
 
-
-const mockAssetLots = [
-    {
-        seq: 101,
-        name: "골드바 10g",
-        gram: 10,
-        tradeDate: "2025-01-02",
-        tradeAmount: 980000,
-    },
-    {
-        seq: 102,
-        name: "콩알금 3.5g",
-        gram: 3.5,
-        tradeDate: "2025-01-02",
-        tradeAmount: 980000,
-    },
-    {
-        seq: 103,
-        name: "24K 반지",
-        gram: 5,
-        tradeDate: "2025-01-02",
-        tradeAmount: 980000,
-    },
-    {
-        seq: 213,
-        name: "24K 반지",
-        gram: 5,
-        tradeDate: "2025-01-02",
-        tradeAmount: 980000,
-    },
-];
-
+//백엔드
+import { getTradeAvailable } from "../api/assetApi"
 
 const GoldSellModal = ({ onClose }) => {
+
+    const [getAssetAvailable, setTradeAvailable] = useState([]);
+    useEffect(() => {
+        getTradeAvailable()
+            .then(res => setTradeAvailable(res.data))
+            .catch(console.error);
+    }, []);
+
     const { getAvailableQuantity } = useAssets();
-    const { onCreate } = useContext(GoldTrackerDispatchContext);
+
+    const { onCreateSell } = useContext(GoldTrackerDispatchContext);
 
     const [selectedLot, setSelectedLot] = useState(null);
     const [form, setForm] = useState({
         seq: 0,
-        tradeDate: Date.now(),
+        tradeDate: new Date().toISOString().slice(0, 10),
         tradeType: "SELL",
         tradeAmount: "",
         content: "",
@@ -59,46 +38,24 @@ const GoldSellModal = ({ onClose }) => {
             alert("매도할 자산을 선택해주세요");
             return;
         }
-
         if (!form.tradeAmount || Number(form.tradeAmount) <= 0) {
             alert("매도 금액을 입력해주세요");
             return;
         }
 
-        console.table([{
-            seq: selectedLot.seq,
-            type: "SELL",
-            tradeDate: form.tradeDate,
-            name: selectedLot.name,
-            gram: selectedLot.gram,
-            tradeAmount: Number(form.tradeAmount),
-            content: form.content,
-        }]);
-
-
-        onCreate(
+        onCreateSell(
             selectedLot.seq,
-            "SELL",
             form.tradeDate,
-            selectedLot.name,
-            selectedLot.gram,
-            Number(form.tradeAmount),
-            form.content
-        );
-
-
-        onCreate(
-            selectedLot.seq,
             "SELL",
-            form.tradeDate,
-            selectedLot.name,
-            selectedLot.gram, // 🔥 수량은 LOT 기준 고정
             Number(form.tradeAmount),
             form.content
         );
 
         onClose();
     };
+
+    //선택 자산의 매입일보다 뒤에 날짜 선택
+    const minDate = selectedLot ? new Date(selectedLot.tradeDate).toISOString().slice(0, 10) : "";
 
     return (
         <div className="modal_backdrop" onClick={onClose}>
@@ -109,11 +66,12 @@ const GoldSellModal = ({ onClose }) => {
                     <label className="date_label">매도일자</label>
                     <input
                         type="date"
-                        value={new Date(form.tradeDate).toISOString().slice(0, 10)}
+                        min={minDate}
+                        value={form.tradeDate}
                         onChange={(e) =>
                             setForm({
                                 ...form,
-                                tradeDate: new Date(e.target.value).getTime(),
+                                tradeDate: e.target.value,
                             })
                         }
                     />
@@ -122,7 +80,7 @@ const GoldSellModal = ({ onClose }) => {
                 <div className="asset_section">
                     <h4>보유 자산 선택</h4>
                     <div className="asset_select_list">
-                        {mockAssetLots.map((lot) => (
+                        {getAssetAvailable.map((lot) => (
                             <div
                                 key={lot.seq}
                                 className={`asset_card ${selectedLot?.seq === lot.seq ? "active" : ""
@@ -131,6 +89,8 @@ const GoldSellModal = ({ onClose }) => {
                             >
                                 <div className="asset_name">{lot.name}</div>
                                 <div className="asset_meta">
+
+                                    <span>매입일: {lot.tradeDate}</span>
                                     <span>{lot.gram} g</span>
                                     <span>{lot.tradeAmount.toLocaleString()}원</span>
                                 </div>

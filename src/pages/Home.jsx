@@ -56,7 +56,6 @@ const Home = () => {
                 <GoldTrader type="TODAY_PRICE" />
             </div>
 
-
             <div className="top-section">
                 <div className="section-2">
                     <h3>🪙 금 시세 & 거래 타임라인</h3>

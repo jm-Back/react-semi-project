@@ -5,11 +5,12 @@ import { useContext, useState } from "react";
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 
 const GoldNewModal = ({ onClose }) => {
-    const { onCreate } = useContext(GoldTrackerDispatchContext);
+    const { onCreateBuy } = useContext(GoldTrackerDispatchContext);
+
     const [form, setForm] = useState({
         tradeType: "BUY",
         tradeDate: Date.now(),
-        assetType: "",
+        assetType: "CNG",
         quantityG: "",
         tradeAmount: "",
         content: "",
@@ -24,13 +25,12 @@ const GoldNewModal = ({ onClose }) => {
             alert("그램(g)을 올바르게 입력해주세요");
             return;
         }
-
         if (!tradeAmount || tradeAmount <= 0) {
             alert("매입가를 올바르게 입력해주세요");
             return;
         }
 
-        onCreate(
+        onCreateBuy(
             "BUY",
             form.tradeDate,
             form.assetType,
@@ -48,8 +48,8 @@ const GoldNewModal = ({ onClose }) => {
                 <h2>금 매입 기록 ✨</h2>
 
                 <div className="row">
-                    <input type="date" onChange={(e) =>
-                        setForm({ ...form, tradeDate: new Date(e.target.value).getTime(), })} />
+                    <input type="date" max={new Date().toISOString().split("T")[0]} onChange={(e) =>
+                        setForm({ ...form, tradeDate: e.target.value, })} />
 
                     <select onChange={(e) =>
                         setForm({ ...form, assetType: e.target.value })}>
