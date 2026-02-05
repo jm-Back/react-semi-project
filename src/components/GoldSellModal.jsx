@@ -3,7 +3,7 @@ import { formatNumber } from "../util/get-comma.js";
 
 import { useContext, useState, useEffect } from "react";
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
-import { useAssets } from "../context/AssetContext";
+// import { useAssets } from "../context/AssetContext";
 
 //백엔드
 import { getTradeAvailable } from "../api/assetApi"
@@ -12,13 +12,21 @@ const GoldSellModal = ({ onClose, isOpen }) => {
 
     const [getAssetAvailable, setTradeAvailable] = useState([]);
     useEffect(() => {
+
+        if (!isOpen) {
+            console.log("GoldSellModal: 모달 닫힘, API 호출 안 함");
+            return; // 모달이 열리지 않았으면 API 호출 안 함
+        }
+
+        console.log("GoldSellModal: 모달 열림, API 호출 시작");
+
         if (!isOpen) return;
         getTradeAvailable()
             .then(res => setTradeAvailable(res.data))
             .catch(console.error);
     }, [isOpen]);
 
-    const { getAvailableQuantity } = useAssets();
+    // const { getAvailableQuantity } = useAssets();
 
     const { onCreateSell } = useContext(GoldTrackerDispatchContext);
 
@@ -31,7 +39,7 @@ const GoldSellModal = ({ onClose, isOpen }) => {
         content: "",
     });
 
-    const availableQuantity = getAvailableQuantity(form.assetType || "BAR");
+    // const availableQuantity = getAvailableQuantity(form.assetType || "BAR");
 
     // 유효성 검사 포함
     const handleSubmit = () => {
