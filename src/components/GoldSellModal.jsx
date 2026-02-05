@@ -8,14 +8,15 @@ import { useAssets } from "../context/AssetContext";
 //백엔드
 import { getTradeAvailable } from "../api/assetApi"
 
-const GoldSellModal = ({ onClose }) => {
+const GoldSellModal = ({ onClose, isOpen }) => {
 
     const [getAssetAvailable, setTradeAvailable] = useState([]);
     useEffect(() => {
+        if (!isOpen) return;
         getTradeAvailable()
             .then(res => setTradeAvailable(res.data))
             .catch(console.error);
-    }, []);
+    }, [isOpen]);
 
     const { getAvailableQuantity } = useAssets();
 
