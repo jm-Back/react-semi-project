@@ -56,14 +56,9 @@ const GoldList = ({ data }) => {
                         )}
                     </div>
                     <div>
-                        <button
-                            onClick={() => {
-                                console.log("매도 버튼 클릭!"); // <- 운영 콘솔에서 꼭 확인
-                                setIsSellOpen(true);
-                            }}
-                        >
-                            매도👋🏻
-                        </button>
+                        <Button onClick={() => setIsSellOpen(true)} text={"매도👋🏻"}
+                            type={"NEGATIVE"}
+                        />
                         {isSellOpen && (
                             <GoldSellModal onClose={() => setIsSellOpen(false)} isOpen={isSellOpen} />
                         )}
