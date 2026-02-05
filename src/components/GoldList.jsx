@@ -52,7 +52,7 @@ const GoldList = ({ data }) => {
                         />
 
                         {isNewOpen && (
-                            <GoldNewModal onClose={() => setIsNewOpen(false)} isOpen={isNewOpen} />
+                            <GoldNewModal key={isNewOpen} onClose={() => setIsNewOpen(false)} isOpen={isNewOpen} />
                         )}
                     </div>
                     <div>
@@ -60,7 +60,7 @@ const GoldList = ({ data }) => {
                             type={"NEGATIVE"}
                         />
                         {isSellOpen && (
-                            <GoldSellModal onClose={() => setIsSellOpen(false)} isOpen={isSellOpen} />
+                            <GoldSellModal key={isSellOpen} onClose={() => setIsSellOpen(false)} isOpen={isSellOpen} />
                         )}
                     </div>
 
