@@ -52,15 +52,20 @@ const GoldList = ({ data }) => {
                         />
 
                         {isNewOpen && (
-                            <GoldNewModal key={isNewOpen} onClose={() => setIsNewOpen(false)} isOpen={isNewOpen} />
+                            <GoldNewModal onClose={() => setIsNewOpen(false)} isOpen={isNewOpen} />
                         )}
                     </div>
                     <div>
-                        <Button onClick={() => setIsSellOpen(true)} text={"매도👋🏻"}
-                            type={"NEGATIVE"}
-                        />
+                        <button
+                            onClick={() => {
+                                console.log("매도 버튼 클릭!"); // <- 운영 콘솔에서 꼭 확인
+                                setIsSellOpen(true);
+                            }}
+                        >
+                            매도👋🏻
+                        </button>
                         {isSellOpen && (
-                            <GoldSellModal key={isSellOpen} onClose={() => setIsSellOpen(false)} isOpen={isSellOpen} />
+                            <GoldSellModal onClose={() => setIsSellOpen(false)} isOpen={isSellOpen} />
                         )}
                     </div>
 
