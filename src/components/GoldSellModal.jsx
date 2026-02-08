@@ -26,8 +26,6 @@ const GoldSellModal = ({ onClose, isOpen }) => {
             .catch(console.error);
     }, [isOpen]);
 
-    // const { getAvailableQuantity } = useAssets();
-
     const { onCreateSell } = useContext(GoldTrackerDispatchContext);
 
     const [selectedLot, setSelectedLot] = useState(null);
@@ -38,8 +36,6 @@ const GoldSellModal = ({ onClose, isOpen }) => {
         tradeAmount: "",
         content: "",
     });
-
-    // const availableQuantity = getAvailableQuantity(form.assetType || "BAR");
 
     // 유효성 검사 포함
     const handleSubmit = () => {

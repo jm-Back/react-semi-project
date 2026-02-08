@@ -5,12 +5,9 @@ import GoldSellModal from "./GoldSellModal";
 import Button from "./common/Button";
 
 import NoData from "./common/NoData";
-
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const GoldList = ({ data }) => {
-    const nav = useNavigate();
 
     //정렬
     const [sortType, setSortType] = useState("latest");

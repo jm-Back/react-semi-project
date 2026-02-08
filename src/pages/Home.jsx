@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Header from "../components/Header";
 import Button from "../components/common/Button";
@@ -12,9 +12,14 @@ import GoldPriceChart from "../components/GoldPriceChart";
 import "./Home.css";
 import { getTradeList } from "../api/tradeApi"
 
+import { AssetRefreshContext } from "../context/AssetRefreshContext";
+
+
 const Home = () => {
     const [pivotDate, setPivotDate] = useState(new Date());
     const [monthlyData, setMonthlyData] = useState([]);
+
+    const { assetVersion } = useContext(AssetRefreshContext);
 
     useEffect(() => {
         const fetchMonthlyData = async () => {
@@ -29,7 +34,7 @@ const Home = () => {
             }
         };
         fetchMonthlyData();
-    }, [pivotDate]);
+    }, [pivotDate, assetVersion]);
 
     const onIncreaseMonth = () => {
         setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1));

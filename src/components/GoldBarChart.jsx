@@ -10,11 +10,13 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { chartColorList } from "../util/chart-color"
 import "./GoldBarChart.css"
 
-import NoData from "./common/NoData";
+import { useState, useEffect, useContext } from "react";
+import { AssetRefreshContext } from "../context/AssetRefreshContext";
 
+import NoData from "./common/NoData";
 //백엔드 통신 
 import { getCategoryData } from "../api/assetApi"
-import { useState, useEffect } from "react";
+
 
 ChartJS.register(
     BarElement,
@@ -41,13 +43,15 @@ function AssetLegend({ datasets }) {
 }
 
 export default function DoughnutChart() {
+    const { assetVersion } = useContext(AssetRefreshContext);
 
     const [categoryValues, setCategoryValues] = useState([]);
+
     useEffect(() => {
         getCategoryData()
-            .then(res => setCategoryValues(res.data))
+            .then(res => setCategoryValues(res.data))       //카테고리 개별 조회 
             .catch(console.error);
-    }, []);
+    }, [assetVersion]);
 
     const data = {
         labels: ['자산 비율'],

@@ -19,8 +19,8 @@ import sellImg from "../assets/gold_image_gray.png";
 import { useContext, useState, useEffect } from "react";
 import { GoldTrackerStateContext } from "../App";
 import { getGoldPrices } from '../api/common';
-import { yearsToMonths } from "date-fns";
 
+import { AssetRefreshContext } from "../context/AssetRefreshContext";
 import { findNearestPrice } from "../util/find-nearest-price";
 
 ChartJS.register(
@@ -55,15 +55,16 @@ const toDateString = (value) => {
 };
 
 export default function GoldPriceChart({ }) {
+    const { assetVersion } = useContext(AssetRefreshContext);    //assetVersion
+    const transactions = useContext(GoldTrackerStateContext)        //data 사용 
 
-    const transactions = useContext(GoldTrackerStateContext)
     const [goldPrices, setGoldPrices] = useState([]);
 
     useEffect(() => {
         getGoldPrices()
             .then(res => setGoldPrices(res.data))
             .catch(console.error);
-    }, []);
+    }, [assetVersion]);                                             //assetVersion
 
     const linePriceData = goldPrices.map(p => ({
         x: p.date,

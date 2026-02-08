@@ -1,7 +1,6 @@
 import { getGoldImage } from "../util/get-gold-image"
 import Button from "./common/Button"
 import "./GoldItem.css"
-import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
 import { GoldTrackerDispatchContext } from "../context/GoldTrackerDispatchContext"; // ✅ context 폴더에서 가져오기
 
@@ -17,7 +16,6 @@ const GoldItem = ({
     realizedProfit,
     content, }) => {
 
-    const nav = useNavigate(); //네비게이트 함수 저장 
     const { onDelete } = useContext(GoldTrackerDispatchContext);
 
     const handleDelete = (seq) => {
@@ -31,18 +29,17 @@ const GoldItem = ({
         onDelete(seq);
     };
 
-
     return (
         <div className="GoldItem">
             <div
-                onClick={() => nav(`/record/${seq}`)}
+
                 className={`img_section img_section_${tradeType}`}>
                 {tradeType === 'BUY' ? <img src={getGoldImage("BUY")} />
                     : <img src={getGoldImage("SELL")} />}
                 <div>{code}</div>
             </div>
             <div
-                onClick={() => nav(`/record/${seq}`)}
+
                 className="info_section">
                 <div className="created_date">
                     {new Date(tradeDate).toLocaleDateString()}
@@ -69,7 +66,6 @@ const GoldItem = ({
                         </div>
                     )}
                 </div>
-
 
                 {content && (
                     <div className="memo">

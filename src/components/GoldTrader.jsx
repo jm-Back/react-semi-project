@@ -1,33 +1,63 @@
-import { useEffect, useState } from "react";
+import { useMemo, useContext } from "react";
 import TickerSlider from "./TickerSlider";
 import TickerItem from "./TickerItem";
+import { AssetSummaryContext } from "../context/AssetSummaryContext";
 
 export default function GoldTrader({ type }) {
-    const [items, setItems] = useState([]);
+    const summary = useContext(AssetSummaryContext);
+    const num = (v) => (typeof v === "number" && !isNaN(v) ? v : 0);
 
-    useEffect(() => {
-        if (type === "TODAY_PRICE") {
-            setItems([
-                { name: "USD/KRW", value: 1345.20, diff: +3.1, history: [1332, 1336, 1340, 1342, 1345] },
-                { name: "GOLD", value: 93500, diff: -120, history: [2342, 232423, 94000, 93800, 93600, 93500] },
-                { name: "KRX GOLD", value: 93200, diff: +80, history: [94000, 93800, 93600, 93500] },
-                { name: "BTC", value: 72000000, diff: +1.2, history: [70000000, 70500000, 71000000, 72000000] },
-            ]);
+    const items = useMemo(() => {
+        if (!summary) return [];
+
+        switch (type) {
+            case "TOTAL_ASSET": {
+                const totalGram = num(summary.totalGram);
+
+                return [
+                    {
+                        label: "금 보유량 (단위: g)",
+                        value: `${totalGram} g`,
+                    },
+                ];
+            }
+
+            case "PROFIT_LOSS": {
+                const realizedProfit = num(summary.realizedProfit);
+                const profitRate = num(summary.profitRate);
+
+                return [
+                    {
+                        label: "실현 손익",
+                        value: realizedProfit,
+                        flag: realizedProfit >= 0 ? "▲" : "▼",
+                    },
+                    {
+                        label: "수익률 (%)",
+                        value: profitRate.toFixed(2),
+                        flag: profitRate >= 0 ? "▲" : "▼",
+                    },
+                ];
+            }
+            case "TODAY_PRICE": {
+                const buyAmount = num(summary.tradeAmount);
+                const currentValue = num(summary.todaysValue);
+
+                return [
+                    {
+                        name: "총매입가",
+                        value: buyAmount,
+                        diff: currentValue - buyAmount,
+                        history: [buyAmount, currentValue],
+                    },
+                ];
+            }
+            default:
+                return [];
         }
+    }, [summary, type]);
 
-        if (type === "TOTAL_ASSET") {
-            setItems([
-                { label: "금 보유량 (단위: g)", value: 10.75 },
-
-            ]);
-        }
-
-        if (type === "PROFIT_LOSS") {
-            setItems([
-                { label: "오늘자 평가손익", value: +120000, flag: "▲" },
-            ]);
-        }
-    }, [type]);
+    if (!summary) return null;
 
     return (
         <TickerSlider items={items}>
@@ -38,8 +68,10 @@ export default function GoldTrader({ type }) {
                     <div className="simple-ticker">
                         <div className="label">{item.label}</div>
                         <div className={`value ${item.flag ? "flag" : ""}`}>
-                            <span>{item.flag}</span>
-                            {item.value.toLocaleString()}
+                            {item.flag && <span>{item.flag}</span>}
+                            {typeof item.value === "number"
+                                ? item.value.toLocaleString() + " 원"
+                                : item.value}
                         </div>
                     </div>
                 )

@@ -1,11 +1,13 @@
 import './App.css'
 
-import { createContext, useReducer, useEffect } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { AssetProvider } from "./context/AssetContext";
-import { GoldTrackerDispatchContext } from "./context/GoldTrackerDispatchContext"
-import { reducer } from "./context/reducer";
+import { createContext, useReducer, useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
+import { GoldTrackerDispatchContext } from "./context/GoldTrackerDispatchContext"
+import { AssetRefreshContext } from "./context/AssetRefreshContext";
+import AssetSummaryProvider from "./context/AssetSummaryProvider";
+
+import { reducer } from "./context/reducer";
 import Home from './pages/Home';
 
 //백엔드
@@ -14,7 +16,14 @@ import { getTradeList, saveTradeBuy, saveTradeSell } from "./api/tradeApi/"
 export const GoldTrackerStateContext = createContext();
 
 function App() {
+    //전체 자산 (total tradeList)
     const [data, dispatch] = useReducer(reducer, []);
+
+    //자산 api 재조회 신호 
+    const [assetVersion, setAssetVersion] = useState(0);
+    const bumpAssetVersion = () => {
+        setAssetVersion(v => v + 1);
+    };
 
     useEffect(() => {
         getTradeList({
@@ -28,9 +37,11 @@ function App() {
                 });
             })
             .catch(console.error);
-    }, []);
+    }, [assetVersion]);
 
-    // //장부 추가 
+
+
+    //장부 추가 
     const onCreateBuy = async (tradeType, tradeDate, assetType, quantityG, tradeAmount, content) => {
         try {
             const res = await saveTradeBuy({
@@ -46,6 +57,7 @@ function App() {
                 type: "CREATE",
                 data: res.data,
             });
+            bumpAssetVersion(); //자산 재조회 
         } catch (e) {
             console.error(e);
             alert("저장 실패");
@@ -61,6 +73,7 @@ function App() {
                 type: "CREATE",
                 data: res.data,
             });
+            bumpAssetVersion(); //자산 재조회
         } catch (e) {
             console.error(e);
             alert("저장 실패");
@@ -72,20 +85,23 @@ function App() {
         dispatch({
             type: "DELETE",
             seq
-        })
+        });
+        bumpAssetVersion(); //자산 재조회 
     }
 
     return (
         <>
-            <AssetProvider>
+            <AssetRefreshContext.Provider value={{ assetVersion, bumpAssetVersion }}>
                 <GoldTrackerStateContext.Provider value={data}>
                     <GoldTrackerDispatchContext.Provider value={{ onDelete, onCreateBuy, onCreateSell }}>
-                        <Routes>
-                            <Route path='/' element={<Home />}></Route>
-                        </Routes>
+                        <AssetSummaryProvider>
+                            <Routes>
+                                <Route path='/' element={<Home />}></Route>
+                            </Routes>
+                        </AssetSummaryProvider>
                     </GoldTrackerDispatchContext.Provider>
                 </GoldTrackerStateContext.Provider>
-            </AssetProvider>
+            </AssetRefreshContext.Provider>
         </>
 
     )

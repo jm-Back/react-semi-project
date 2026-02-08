@@ -7,10 +7,12 @@ function TickerItem({ item }) {
         <div className="ticker-item">
             <div className="">
                 <div className="name">{item.name}</div>
-                <span className="price">{item.value.toLocaleString()}</span>
-                <span className={`diff ${isUp ? "up" : "down"}`}>
-                    {isUp ? "▲" : "▼"} {Math.abs(item.diff)}
-                </span>
+                <span className="price">{item.value.toLocaleString()} 원</span>
+                {item.diff != null && (
+                    <span className={`diff ${isUp ? "up" : "down"}`}>
+                        {isUp ? "▲" : "▼"} {Math.abs(item.diff).toLocaleString()}
+                    </span>
+                )}
             </div>
             <MiniLineChart data={item.history} isUp={isUp} />
         </div>

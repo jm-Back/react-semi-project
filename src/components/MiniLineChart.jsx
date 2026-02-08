@@ -14,7 +14,9 @@ ChartJS.register(
     PointElement
 );
 
-export default function MiniLineChart({ data, isUp }) {
+export default function MiniLineChart({ data = [], isUp }) {
+    if (data.length === 0) return null;
+
     const chartData = {
         labels: data.map((_, i) => i),
         datasets: [

@@ -1,7 +1,8 @@
 import { createContext } from "react";
 
 export const GoldTrackerDispatchContext = createContext({
-    onCreate: () => { },
+    onCreateBuy: () => { },
+    onCreateSell: () => { },
     onDelete: () => { },
 });
 
